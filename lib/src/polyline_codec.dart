@@ -6,7 +6,6 @@ class PolylineCodec {
   PolylineCodec._();
 
   static int _py2Round(num value) {
-    // Google's polyline algorithm uses the same rounding strategy as Python 2, which is different from JS for negative values
     return (value.abs() + 0.5).floor() * (value >= 0 ? 1 : -1);
   }
 
