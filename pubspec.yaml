@@ -1,8 +1,8 @@
 name: polyline_codec
 description: A new Flutter package project.
 version: 0.1.0
-author:
-homepage:
+author: Everton Santos <everton.build@gmail.com>
+homepage: https://github.com/everton-e26/polyline_codec
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
