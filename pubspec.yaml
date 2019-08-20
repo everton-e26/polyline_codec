@@ -1,6 +1,6 @@
 name: polyline_codec
-description: polyline encoding and decoding in dart.
-version: 0.1.1
+description: Easy way to encoding and decoding a Google Maps Polyline Algorithm for flutter
+version: 0.1.2
 author: Everton Santos <everton.build@gmail.com>
 homepage: https://github.com/everton-e26/polyline_codec
 
