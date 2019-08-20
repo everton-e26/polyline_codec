@@ -20,7 +20,7 @@ class PolylineCodec {
     var output = "";
     while (coordinate >= Int32(0x20)) {
       try {
-        var v = (Int32(0x20) | (coordinate & Int32(0x1f))) + 63;
+        Int32 v = (Int32(0x20) | (coordinate & Int32(0x1f))) + 63;
         output += String.fromCharCodes([v.toInt()]);
       } catch (err) {
         print(err);
@@ -60,7 +60,7 @@ class PolylineCodec {
       } while (byte >= 0x20);
 
       latitudeChange =
-          ((result != 0 & 1) ? ~(Int32(result) >> 1) : (Int32(result) >> 1))
+          ((result & 1) != 0 ? ~(Int32(result) >> 1) : (Int32(result) >> 1))
               .toInt();
 
       shift = result = 0;
@@ -72,7 +72,7 @@ class PolylineCodec {
       } while (byte >= 0x20);
 
       longitudeChange =
-          ((result != 0 & 1) ? ~(Int32(result) >> 1) : (Int32(result) >> 1))
+          ((result & 1) != 0 ? ~(Int32(result) >> 1) : (Int32(result) >> 1))
               .toInt();
 
       lat += latitudeChange;
