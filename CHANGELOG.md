@@ -7,3 +7,7 @@
 - Example
 - Description
 - fix bug
+
+## [0.1.4] - Aug 12 2020
+
+- Remove flutter dependency
