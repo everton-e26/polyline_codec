@@ -11,3 +11,7 @@
 ## [0.1.4] - Aug 12 2020
 
 - Remove flutter dependency
+
+## [0.1.5] - Aug 15 2020
+
+- Update test dependency
