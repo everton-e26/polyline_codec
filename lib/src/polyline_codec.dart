@@ -5,14 +5,14 @@ import 'package:fixnum/fixnum.dart';
 class PolylineCodec {
   PolylineCodec._();
 
-  static int _py2Round(num value) {
+  static num _py2Round(num value) {
     return (value.abs() + 0.5).floor() * (value >= 0 ? 1 : -1);
   }
 
-  static _encode(num current, num previous, num factor) {
+  static String _encode(num current, num previous, num factor) {
     current = _py2Round(current * factor);
     previous = _py2Round(previous * factor);
-    Int32 coordinate = Int32(current) - Int32(previous);
+    Int32 coordinate = Int32(current as int) - Int32(previous as int) as Int32;
     coordinate <<= 1;
     if (current - previous < 0) {
       coordinate = ~coordinate;
@@ -20,7 +20,7 @@ class PolylineCodec {
     var output = "";
     while (coordinate >= Int32(0x20)) {
       try {
-        Int32 v = (Int32(0x20) | (coordinate & Int32(0x1f))) + 63;
+        Int32 v = (Int32(0x20) | (coordinate & Int32(0x1f))) + 63 as Int32;
         output += String.fromCharCodes([v.toInt()]);
       } catch (err) {
         print(err);
@@ -31,7 +31,7 @@ class PolylineCodec {
     return output;
   }
 
-  static List<List<num>> decode(String str, {int precision: 5}) {
+  static List<List<num>> decode(String str, {int precision = 5}) {
     final List<List<num>> coordinates = [];
 
     var index = 0,
@@ -39,10 +39,9 @@ class PolylineCodec {
         lng = 0,
         shift = 0,
         result = 0,
-        byte,
-        latitudeChange,
-        longitudeChange,
         factor = math.pow(10, precision);
+
+    int? latitudeChange, longitudeChange, byte;
 
     // Coordinates have variable length when encoded, so just keep
     // track of whether we've hit the end of the string. In each
@@ -84,14 +83,14 @@ class PolylineCodec {
     return coordinates;
   }
 
-  static encode(List<List<num>> coordinates, {int precision: 5}) {
+  static String encode(List<List<num>> coordinates, {int precision = 5}) {
     if (coordinates.length == 0) {
       return "";
     }
 
-    var factor = math.pow(10, precision),
-        output = _encode(coordinates[0][0], 0, factor) +
-            _encode(coordinates[0][1], 0, factor);
+    final factor = math.pow(10, precision);
+    var output = _encode(coordinates[0][0], 0, factor) +
+        _encode(coordinates[0][1], 0, factor);
 
     for (var i = 1; i < coordinates.length; i++) {
       var a = coordinates[i], b = coordinates[i - 1];
